@@ -1,0 +1,182 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+
+public class DoctorForm extends JFrame {
+
+    private final JTextField txtId;
+    private final JTextField txtName;
+    private final JTextField txtFname;
+    private final JTextField txtE;
+    private final JTextField txtQ;
+    private final JTextField txtD;
+    private final JTextField txtAd;
+    private final JTextField txtC;
+    private final JComboBox<String> cmbB;
+    private final JComboBox<String> cmbG;
+
+    public DoctorForm() {
+        setTitle("Doctor Form");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new GridLayout(11, 2));
+
+        // Create and add labels and text fields
+        JLabel lblId = new JLabel("Doctor ID:");
+        txtId = new JTextField();
+        add(lblId);
+        add(txtId);
+
+        JLabel lblName = new JLabel("Doctor Name:");
+        txtName = new JTextField();
+        add(lblName);
+        add(txtName);
+
+        JLabel lblFname = new JLabel("Father's Name:");
+        txtFname = new JTextField();
+        add(lblFname);
+        add(txtFname);
+
+        JLabel lblE = new JLabel("Email:");
+        txtE = new JTextField();
+        add(lblE);
+        add(txtE);
+
+        JLabel lblQ = new JLabel("Qualifications:");
+        txtQ = new JTextField();
+        add(lblQ);
+        add(txtQ);
+
+        JLabel lblB = new JLabel("Blood Group:");
+        String[] bloodGroups = {"A", "B", "AB", "O"};
+        cmbB = new JComboBox<>(bloodGroups);
+        add(lblB);
+        add(cmbB);
+
+        JLabel lblG = new JLabel("Gender:");
+        String[] genders = {"Male", "Female", "Other"};
+        cmbG = new JComboBox<>(genders);
+        add(lblG);
+        add(cmbG);
+
+        JLabel lblD = new JLabel("Date of Joining:");
+        txtD = new JTextField();
+        add(lblD);
+        add(txtD);
+
+        JLabel lblAd = new JLabel("Address:");
+        txtAd = new JTextField();
+        add(lblAd);
+        add(txtAd);
+
+        JLabel lblC = new JLabel("Contact No:");
+        txtC = new JTextField();
+        add(lblC);
+        add(txtC);
+
+        // Create buttons
+        JButton btnSave = new JButton("Save");
+        JButton btnUpdate = new JButton("Update");
+        JButton btnDelete = new JButton("Delete");
+        JButton btnNew = new JButton("New");
+        JButton btnGetData = new JButton("Get Data");
+
+        // Add button actions
+        btnSave.addActionListener((ActionEvent e) -> {
+            saveDoctorData();
+        });
+
+        btnUpdate.addActionListener((ActionEvent e) -> {
+            updateDoctorData();
+        });
+
+        btnDelete.addActionListener((ActionEvent e) -> {
+            deleteDoctorData();
+        });
+
+        btnNew.addActionListener((ActionEvent e) -> {
+            clearForm();
+        });
+
+        btnGetData.addActionListener((ActionEvent e) -> {
+            retrieveDoctorData();
+        });
+
+        // Add buttons to the layout
+        add(btnSave);
+        add(btnUpdate);
+        add(btnDelete);
+        add(btnNew);
+        add(btnGetData);
+    }
+
+    public void saveDoctorData() {
+        // Implementation for saving doctor data to the database
+        // Retrieve data from text fields and comboBoxes
+        String doctorId = txtId.getText();
+        String doctorName = txtName.getText();
+        String fatherName = txtFname.getText();
+        String email = txtE.getText();
+        String qualifications = txtQ.getText();
+        String bloodGroup = cmbB.getSelectedItem().toString();
+        String gender = cmbG.getSelectedItem().toString();
+        String dateOfJoining = txtD.getText();
+        String address = txtAd.getText();
+        String contactNo = txtC.getText();
+
+        // Implement database saving logic here
+        // ...
+    }
+
+    public void updateDoctorData() {
+        // Implementation for updating doctor data in the database
+        // Retrieve data from text fields and comboBoxes
+        String doctorId = txtId.getText();
+        String doctorName = txtName.getText();
+        String fatherName = txtFname.getText();
+        String email = txtE.getText();
+        String qualifications = txtQ.getText();
+        String bloodGroup = cmbB.getSelectedItem().toString();
+        String gender = cmbG.getSelectedItem().toString();
+        String dateOfJoining = txtD.getText();
+        String address = txtAd.getText();
+        String contactNo = txtC.getText();
+
+        // Implement database update logic here
+        // ...
+    }
+
+    public void deleteDoctorData() {
+        // Implementation for deleting doctor data from the database
+        // Retrieve doctor ID from text field
+        String doctorId = txtId.getText();
+
+        // Implement database deletion logic here
+        // ...
+    }
+
+    public void clearForm() {
+        // Clear all text fields and reset combo boxes
+        txtId.setText("");
+        txtName.setText("");
+        txtFname.setText("");
+        txtE.setText("");
+        txtQ.setText("");
+        cmbB.setSelectedIndex(0);
+        cmbG.setSelectedIndex(0);
+        txtD.setText("");
+        txtAd.setText("");
+        txtC.setText("");
+    }
+
+    public void retrieveDoctorData() {
+        // Implementation for retrieving doctor data from the database
+        // Implement database retrieval logic here
+        // ...
+    }
+
+    public static void main(String[] args) {
+        DoctorForm form = new DoctorForm();
+        form.setSize(400, 400);
+        form.setVisible(true);
+    }
+}
