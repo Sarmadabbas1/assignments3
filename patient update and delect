@@ -1,0 +1,273 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+
+public class GUIForum extends JFrame {
+    private final JTextField idField;
+    private final JTextField nameField;
+    private final JComboBox<String> genderComboBox;
+    private final JTextField bloodGroupField;
+    private final JTextField diseaseField;
+    private final JTextField admitDateField;
+    private final JTextField roomNoField;
+    private final JTextField doctorIdField;
+    private final JTextField doctorNameField;
+    private final JTextField dischargeDateField;
+
+    private final ArrayList<PatientInfo> patientList;
+    private final DefaultListModel<PatientInfo> patientListModel;
+    private final JList<PatientInfo> patientJList;
+
+    public GUIForum() {
+        super("Patient Information");
+
+        // Set headless mode
+        System.setProperty("java.awt.headless", "true");
+
+        // Set up the main panel
+        JPanel mainPanel = new JPanel(new BorderLayout());
+
+        // Create a form panel
+        JPanel formPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(5, 5, 5, 5);
+
+        // Add ID field
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        formPanel.add(new JLabel("ID:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        idField = new JTextField(10);
+        formPanel.add(idField, gbc);
+
+        // Add name field
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        formPanel.add(new JLabel("Name:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        nameField = new JTextField(10);
+        formPanel.add(nameField, gbc);
+
+        // Add gender field
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        formPanel.add(new JLabel("Gender:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        String[] genders = {"Male", "Female"};
+        genderComboBox = new JComboBox<>(genders);
+        formPanel.add(genderComboBox, gbc);
+
+        // Add blood group field
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        formPanel.add(new JLabel("Blood Group:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        bloodGroupField = new JTextField(10);
+        formPanel.add(bloodGroupField, gbc);
+
+        // Add disease field
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        formPanel.add(new JLabel("Disease:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        diseaseField = new JTextField(10);
+        formPanel.add(diseaseField, gbc);
+
+        // Add admit date field
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        formPanel.add(new JLabel("Admit Date:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 5;
+        admitDateField = new JTextField(10);
+        formPanel.add(admitDateField, gbc);
+
+        // Add room number field
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        formPanel.add(new JLabel("Room No.:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 6;
+        roomNoField = new JTextField(10);
+        formPanel.add(roomNoField, gbc);
+
+        // Add doctor ID field
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        formPanel.add(new JLabel("Doctor ID:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 7;
+        doctorIdField = new JTextField(10);
+        formPanel.add(doctorIdField, gbc);
+
+        // Add doctor name field
+        gbc.gridx = 0;
+        gbc.gridy = 8;
+        formPanel.add(new JLabel("Doctor Name:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 8;
+        doctorNameField = new JTextField(10);
+        formPanel.add(doctorNameField, gbc);
+
+        // Add discharge date field
+        gbc.gridx = 0;
+        gbc.gridy = 9;
+        formPanel.add(new JLabel("Discharge Date:"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 9;
+        dischargeDateField = new JTextField(10);
+        formPanel.add(dischargeDateField, gbc);
+
+        // Add form panel to the main panel
+        mainPanel.add(formPanel, BorderLayout.WEST);
+
+        // Create buttons panel
+        JPanel buttonsPanel = new JPanel();
+
+        // Add "Add Patient" button
+        JButton addButton = new JButton("Add Patient");
+        addButton.addActionListener((ActionEvent e) -> {
+            addPatient();
+        });
+        buttonsPanel.add(addButton);
+
+        // Add "Display Patients" button
+        JButton displayButton = new JButton("Display Patients");
+        displayButton.addActionListener((ActionEvent e) -> {
+            displayPatients();
+        });
+        buttonsPanel.add(displayButton);
+
+        // Add buttons panel to the main panel
+        mainPanel.add(buttonsPanel, BorderLayout.SOUTH);
+
+        // Create patient list and list model
+        patientList = new ArrayList<>();
+        patientListModel = new DefaultListModel<>();
+        patientJList = new JList<>(patientListModel);
+
+        // Set up the patient list
+        JScrollPane scrollPane = new JScrollPane(patientJList);
+        scrollPane.setPreferredSize(new Dimension(300, 200));
+
+        // Add the patient list to the main panel
+        mainPanel.add(scrollPane, BorderLayout.CENTER);
+
+        // Add main panel to the frame
+        add(mainPanel);
+
+        // Set frame properties
+        pack();
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+    }
+
+    private void addPatient() {
+        int id = Integer.parseInt(idField.getText());
+        String name = nameField.getText();
+        String gender = (String) genderComboBox.getSelectedItem();
+        String bloodGroup = bloodGroupField.getText();
+        String disease = diseaseField.getText();
+        String admitDate = admitDateField.getText();
+        String roomNo = roomNoField.getText();
+        int doctorId = Integer.parseInt(doctorIdField.getText());
+        String doctorName = doctorNameField.getText();
+        String dischargeDate = dischargeDateField.getText();
+
+        PatientInfo patient = new PatientInfo(id, name, gender, bloodGroup, disease, admitDate, roomNo, doctorId, doctorName, dischargeDate);
+        patientList.add(patient);
+        patientListModel.addElement(patient);
+
+        // Clear the input fields
+        clearFields();
+    }
+
+    private void displayPatients() {
+        StringBuilder sb = new StringBuilder();
+        for (PatientInfo patient : patientList) {
+            sb.append(patient.toString());
+            sb.append("\n");
+        }
+
+        JOptionPane.showMessageDialog(this, sb.toString(), "Patient Information", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void clearFields() {
+        idField.setText("");
+        nameField.setText("");
+        genderComboBox.setSelectedIndex(0);
+        bloodGroupField.setText("");
+        diseaseField.setText("");
+        admitDateField.setText("");
+        roomNoField.setText("");
+        doctorIdField.setText("");
+        doctorNameField.setText("");
+        dischargeDateField.setText("");
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new GUIForum();
+            }
+        });
+    }
+}
+
+class PatientInfo {
+    private final int id;
+    private final String name;
+    private final String gender;
+    private final String bloodGroup;
+    private final String disease;
+    private final String admitDate;
+    private final String roomNo;
+    private final int doctorId;
+    private final String doctorName;
+    private final String dischargeDate;
+
+    public PatientInfo(int id, String name, String gender, String bloodGroup, String disease, String admitDate, String roomNo, int doctorId, String doctorName, String dischargeDate) {
+        this.id = id;
+        this.name = name;
+        this.gender = gender;
+        this.bloodGroup = bloodGroup;
+        this.disease = disease;
+        this.admitDate = admitDate;
+        this.roomNo = roomNo;
+        this.doctorId = doctorId;
+        this.doctorName = doctorName;
+        this.dischargeDate = dischargeDate;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + id +
+                "\nName: " + name +
+                "\nGender: " + gender +
+                "\nBlood Group: " + bloodGroup +
+                "\nDisease: " + disease +
+                "\nAdmit Date: " + admitDate +
+                "\nRoom No.: " + roomNo +
+                "\nDoctor ID: " + doctorId +
+                "\nDoctor Name: " + doctorName +
+                "\nDischarge Date: " + dischargeDate;
+    }
+}
