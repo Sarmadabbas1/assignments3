@@ -1,0 +1,85 @@
+import java.awt.*;
+import javax.swing.*;
+
+public class DoctorRecordsGUI extends JFrame {
+    private JPanel panel;
+    private JButton saveButton;
+    private JButton updateButton;
+    private JButton deleteButton;
+    private JButton getDataButton;
+
+    public DoctorRecordsGUI() {
+        initialize();
+        addLabelsAndFields();
+        addButtons();
+    }
+
+    private void initialize() {
+        setTitle("Doctor Records");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(400, 400);
+        setLocationRelativeTo(null);
+
+        panel = new JPanel();
+        panel.setLayout(new GridLayout(0, 2));
+        getContentPane().add(panel, BorderLayout.WEST);
+    }
+
+    private void addLabelsAndFields() {
+        String[] labels = {
+            "Doctor ID:", "Doctor Name:", "Father Name:", "Address:", "Contact No:",
+            "Email ID:", "Qualifications:", "Gender:", "Blood Group:", "Joining Date:"
+        };
+
+        for (String label : labels) {
+            panel.add(new JLabel(label));
+            panel.add(new JTextField());
+        }
+    }
+
+    private void addButtons() {
+        saveButton = new JButton("Save");
+        updateButton = new JButton("Update");
+        deleteButton = new JButton("Delete");
+        getDataButton = new JButton("Get Data");
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(0, 1, 0, 10));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        buttonPanel.add(saveButton);
+        buttonPanel.add(updateButton);
+        buttonPanel.add(deleteButton);
+        buttonPanel.add(getDataButton);
+
+        getContentPane().add(buttonPanel, BorderLayout.EAST);
+
+        saveButton.addActionListener(e -> {
+            // Logic for saving the doctor information
+            JOptionPane.showMessageDialog(DoctorRecordsGUI.this, "Doctor information saved.");
+        });
+
+        updateButton.addActionListener(e -> {
+            // Logic for updating the doctor information
+            JOptionPane.showMessageDialog(DoctorRecordsGUI.this, "Doctor information updated.");
+        });
+
+        deleteButton.addActionListener(e -> {
+            // Logic for deleting the doctor information
+            JOptionPane.showMessageDialog(DoctorRecordsGUI.this, "Doctor information deleted.");
+        });
+
+        getDataButton.addActionListener(e -> {
+            // Logic for retrieving the doctor information from the database
+            // and populating the text fields
+            JOptionPane.showMessageDialog(DoctorRecordsGUI.this, "Doctor information retrieved.");
+        });
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            DoctorRecordsGUI gui = new DoctorRecordsGUI();
+            gui.setVisible(true);
+        });
+    }
+}
+
